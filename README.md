@@ -1,0 +1,2 @@
+# SpaceCubics-Intern
+SpaceCubicsのインターンで書いているラズパイ関連のリポジトリ
