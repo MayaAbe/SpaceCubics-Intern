@@ -1,5 +1,4 @@
 import socket
-import time
 import os
 
 # UDPのポート番号を指定
@@ -16,12 +15,19 @@ while True:
 
     if data==b"\x41":
         print("Camera activate")
-        response="Camera activated".encode('utf-8')
-        sock.sendto(response, addr)
-        '''GPIO.output(PIN, 1)
-        time.sleep(1)
-        GPIO.output(PIN, 0)
-        print("blink LED")'''
+        sock.sendto(b'0', addr)
+        sock.sendto(b'a', addr)  # 「a」のバイトデータをPCに返す
+        
+        response, _ = sock.recvfrom(1)  # PCからの返信を待つ
+        if response == b'j':
+            os.system("libcamera-raw -t 2000 -o test.jpg")
+            sock.sendto(b'j', addr)  # 「j」のバイトデータをPCに返す
+        if response == b'r':
+            os.system("libcamera-raw -t 2000 -o test.raw")
+            sock.sendto(b'r', addr)  # 「r」のバイトデータをPCに返す
+        if response == b'n':
+            #os.system("libcamera-raw -t 2000 -o test.jpg")
+            sock.sendto(b'n', addr)  # 「n」のバイトデータをPCに返す
     elif data==b"\x42":
         print("HK data are ...")
         response="HK data abcdef...".encode('utf-8')
