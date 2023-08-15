@@ -20,7 +20,7 @@ while True:
         
         response, _ = sock.recvfrom(1)  # PCからの返信を待つ
         if response == b'j':
-            os.system("libcamera-raw -t 2000 -o test.jpg")
+            os.system("libcamera-jpeg -o test.jpg")
             sock.sendto(b'j', addr)  # 「j」のバイトデータをPCに返す
         if response == b'r':
             os.system("libcamera-raw -t 2000 -o test.raw")
