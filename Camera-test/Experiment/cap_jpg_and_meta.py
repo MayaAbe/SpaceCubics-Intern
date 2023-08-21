@@ -28,13 +28,13 @@ def get_next_image_index(directory):
     else:
         return 1
 
-def save_image_and_exposure(directory, index, image, exposure):
+def save_image_and_metadata(directory, index, image, metadata):
     image_filename = os.path.join(directory, f"image{index}.jpg")
-    exposure_filename = os.path.join(directory, f"image{index}.txt")
+    metadata_filename = os.path.join(directory, f"image{index}.txt")
     
     cv2.imwrite(image_filename, image)
-    with open(exposure_filename, 'w') as f:
-        f.write(str(exposure))
+    with open(metadata_filename, 'w') as f:
+        f.write(str(metadata))
 
 picam2 = Picamera2()
 time.sleep(1)
@@ -80,7 +80,7 @@ if not os.path.exists(images_dir):
 index = get_next_image_index(images_dir)
 
 # Save images and exposures
-save_image_and_exposure(images_dir, index, short, meta_short)
-save_image_and_exposure(images_dir, index + 1, normal, meta_normal)
-save_image_and_exposure(images_dir, index + 2, long, meta_long)
-save_image_and_exposure(images_dir, index + 3, merged, "merged")
+save_image_and_metadata(images_dir, index, short, meta_short)
+save_image_and_metadata(images_dir, index + 1, normal, meta_normal)
+save_image_and_metadata(images_dir, index + 2, long, meta_long)
+save_image_and_metadata(images_dir, index + 3, merged, "merged")
