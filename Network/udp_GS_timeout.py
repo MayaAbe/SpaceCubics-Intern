@@ -1,28 +1,28 @@
 import socket
 
-TARGET_IP = "192.168.3.5"
+TARGET_IP = "192.168.3.5" #change in need 
 UDP_PORT = 50000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(("0.0.0.0", UDP_PORT))
 
-# ハンドシェイク用のバイナリデータを送信
+# Send binary data for handshake
 sock.sendto(b"\x05", (TARGET_IP, UDP_PORT))
 
-# ソケットのタイムアウトを30秒に設定
+# Set socket timeout to 30 seconds
 sock.settimeout(30)
 
 try:
-    # 応答を待機
+    # Wait for response
     data, addr = sock.recvfrom(1)
 
-    # 応答が "\x06" であるか確認
+    # Check if the response is "\x06"
     if data == b"\x06":
-        message = "送信するデータをA~Cで入力してください: \n" \
-                    "  A: 画像撮影\n" \
-                    "  B: HKデータ取得\n" \
-                    "  C: rebootをかける\n" \
-                    "入力してください: "
+        message = "Please enter the data to send from A to C: \n" \
+                    "  A: Take a picture\n" \
+                    "  B: Get HK data\n" \
+                    "  C: Trigger a reboot\n" \
+                    "Please enter: "
         
         cmd = input(f"{message}")
         MESSAGE = cmd.encode('utf-8')
