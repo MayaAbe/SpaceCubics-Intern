@@ -1,2 +1,2 @@
 # SpaceCubics-Intern
-SpaceCubicsのインターンで書いているラズパイ関連のリポジトリ
+Repository for SpaceCubics internship
