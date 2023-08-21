@@ -4,18 +4,22 @@ import time
 
 fmt_line = "----"
 
-# Raspberry Pi ZeroのIPアドレスとUDPのポート番号を指定
-TARGET_IP = "192.168.3.5"
+
+# Specify IP address and UDP port number for Raspberry Pi Zero
+TARGET_IP = input("Target IP is: ")  # "192.168.3.5"
+
 UDP_PORT = 50000
 
-flag=0
 
 # 受信機能を持つ関数
 def receive_messages(sock):
     while True:
-        data, addr = sock.recvfrom(1024)  # 1024バイトまで受信可能
-        #print(f"----\nReceived response: {data.decode('utf-8')} \nfrom {addr}\n----")
-        #print(f"{fmt_line}Responce from: {addr} {fmt_line}")
+
+        data, addr = sock.recvfrom(1024)  # can receive up to 1024 bytes
+        # print(f"----\nReceived response: {data.decode('utf-8')} \nfrom {addr}\n----")
+        # print(f"{fmt_line}Response from: {addr} {fmt_line}")
+
+
         if data == b"0":
             pass
         if data == b"1":
@@ -25,20 +29,25 @@ def receive_messages(sock):
         if data == b"3":
             print("正規の信号ではありませんでした")
 
-        if data == b"a":
+        if data == b"A":
             while True:
                 while True:
                     print("Camera Activated")
-                    choice = input("写真を撮りますか？(JPG: j, RAW: r, no: n): ")
-                    
-                    if choice in ['j', 'r', 'n']:
-                        sock.sendto(choice.encode('utf-8'), (TARGET_IP, UDP_PORT))
+                    choice = input(
+                        "Do you want to take a photo? (JPG: j, RAW: r, no: n): "
+                    )
+
+                    if choice in ["j", "r", "n"]:
+                        sock.sendto(choice.encode("utf-8"), (TARGET_IP, UDP_PORT))
+
                         break
                 print("responseを待っています")
 
                 response, _ = sock.recvfrom(1)
-                if response == b'j':
-                    print("\n jpeg画像が撮影されました")
+
+                if response == b"j":
+                    print("\n A jpeg image was taken")
+
                     break
                 if response == b"r":
                     print("\n raw画像が撮影されました")
@@ -61,7 +70,7 @@ while True:
     if flag == 0:
         cmd = input("送信するデータをA~Cで入力してください: ")
         try:
-            cmd = cmd.encode('utf-8')
+            cmd = cmd.encode("utf-8")
         except:
             print("ENCODE ERROR")
 
