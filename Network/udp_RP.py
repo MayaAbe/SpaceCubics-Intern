@@ -21,9 +21,11 @@ while True:
         response, _ = sock.recvfrom(1)  # Wait for a reply from the PC
         if response == b'j':
             os.system("libcamera-jpeg -o test.jpg")
+            # Planning to change to the Python program
             sock.sendto(b'j', addr)  # Return byte data 'j' to the PC
         if response == b'r':
             os.system("libcamera-raw -t 2000 -o test.raw")
+            # Planning to change to the Python program
             sock.sendto(b'r', addr)  # Return byte data 'r' to the PC
         if response == b'n':
             #os.system("libcamera-raw -t 2000 -o test.jpg")
