@@ -5,17 +5,18 @@ import time
 fmt_line = "----"
 
 # Specify IP address and UDP port number for Raspberry Pi Zero
-TARGET_IP = "192.168.3.5"
+TARGET_IP = input("Target IP is: ")  # "192.168.3.5"
 UDP_PORT = 50000
 
-flag=0
+flag = 0
+
 
 # Function with receiving capability
 def receive_messages(sock):
     while True:
         data, addr = sock.recvfrom(1024)  # can receive up to 1024 bytes
-        #print(f"----\nReceived response: {data.decode('utf-8')} \nfrom {addr}\n----")
-        #print(f"{fmt_line}Response from: {addr} {fmt_line}")
+        # print(f"----\nReceived response: {data.decode('utf-8')} \nfrom {addr}\n----")
+        # print(f"{fmt_line}Response from: {addr} {fmt_line}")
         if data == b"0":
             pass
         if data == b"1":
@@ -25,19 +26,21 @@ def receive_messages(sock):
         if data == b"3":
             print("Received an irregular signal")
 
-        if data == b"a":
+        if data == b"A":
             while True:
                 while True:
                     print("Camera Activated")
-                    choice = input("Do you want to take a photo? (JPG: j, RAW: r, no: n): ")
-                    
-                    if choice in ['j', 'r', 'n']:
-                        sock.sendto(choice.encode('utf-8'), (TARGET_IP, UDP_PORT))
+                    choice = input(
+                        "Do you want to take a photo? (JPG: j, RAW: r, no: n): "
+                    )
+
+                    if choice in ["j", "r", "n"]:
+                        sock.sendto(choice.encode("utf-8"), (TARGET_IP, UDP_PORT))
                         break
                 print("Waiting for response")
 
                 response, _ = sock.recvfrom(1)
-                if response == b'j':
+                if response == b"j":
                     print("\n A jpeg image was taken")
                     break
                 if response == b"r":
@@ -61,7 +64,7 @@ while True:
     if flag == 0:
         cmd = input("Please enter the data to send from A to C: ")
         try:
-            cmd = cmd.encode('utf-8')
+            cmd = cmd.encode("utf-8")
         except:
             print("ENCODE ERROR")
 
