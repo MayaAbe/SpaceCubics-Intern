@@ -3,10 +3,10 @@ from picamera2 import Picamera2
 picam2 = Picamera2()
 picam2.start()
 
-#metadata method retuns dictionary type
+#metadataは辞書型らしい
 metadata = picam2.capture_metadata()
 
-#Roop and get metadata
+#辞書型の中身をループさせて全部表示させる
 print("-------------------------------")
 
 for key, value in metadata.items():
