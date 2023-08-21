@@ -8,8 +8,6 @@ fmt_line = "----"
 TARGET_IP = input("Target IP is: ")  # "192.168.3.5"
 UDP_PORT = 50000
 
-flag = 0
-
 
 # Function with receiving capability
 def receive_messages(sock):
