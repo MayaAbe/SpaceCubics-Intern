@@ -6,8 +6,11 @@ from picamera2 import Picamera2, Preview
 def capture_dng(output_filename="cap_dng_jpg.dng"):
     picam2 = Picamera2()
 
-    controls = {"ExposureTime": exposure_normal, "AnalogueGain": gain}
-    capture_config = picam2.create_still_configuration(raw={}, display=None, controls=metadata)
+    exposure = 8000
+    gain = 1
+
+    controls = {"ExposureTime": exposure, "AnalogueGain": gain}
+    capture_config = picam2.create_still_configuration(raw={}, display=None, controls=controls)
 
     picam2.start()
     time.sleep(2)
