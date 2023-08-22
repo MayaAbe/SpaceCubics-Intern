@@ -1,5 +1,5 @@
 import socket
-import subprocess
+#import subprocess
 
 
 def main():
@@ -22,12 +22,10 @@ def main():
 
             response, _ = SOCK.recvfrom(1)  # Wait for a reply from the PC
             if response == b"j":
-                subprocess.run(["libcamera-jpeg", "-o", "test.jpg"], check=True)
+                #subprocess.run(["libcamera-jpeg", "-o", "test.jpg"], check=True)
                 SOCK.sendto(b"j", ADDR)  # Return byte data 'j' to the PC
             if response == b"r":
-                subprocess.run(
-                    ["libcamera-raw", "-t", "2000", "-o", "test.raw"], check=True
-                )
+                #subprocess.run(["libcamera-raw", "-t", "2000", "-o", "test.raw"], check=True)
                 SOCK.sendto(b"r", ADDR)  # Return byte data 'r' to the PC
             if response == b"n":
                 SOCK.sendto(b"n", ADDR)  # Return byte data 'n' to the PC

@@ -1,21 +1,19 @@
 #!/usr/bin/python3
 
-# Capture a DNG and a JPEG made from the same raw data.
-
 import time
-
 from picamera2 import Picamera2, Preview
 
-picam2 = Picamera2()
-#picam2.start_preview(Preview.QTGL)
+def capture_dng(output_filename="cap_dng_jpg.dng"):
+    picam2 = Picamera2()
 
-#preview_config = picam2.create_preview_configuration()
-capture_config = picam2.create_still_configuration(raw={}, display=None)
-#picam2.configure(preview_config)
+    controls = {"ExposureTime": exposure_normal, "AnalogueGain": gain}
+    capture_config = picam2.create_still_configuration(raw={}, display=None, controls=metadata)
 
-picam2.start()
-time.sleep(2)
+    picam2.start()
+    time.sleep(2)
 
-r = picam2.switch_mode_capture_request_and_stop(capture_config)
-r.save("main", "cap_dng_jpg.jpg")
-r.save_dng("cap_dng_jpg.dng")
+    r = picam2.switch_mode_capture_request_and_stop(capture_config)
+    r.save_dng(output_filename)
+
+if __name__ == "__main__":
+    capture_dng()
