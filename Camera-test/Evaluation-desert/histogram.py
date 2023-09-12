@@ -17,7 +17,7 @@ def analyze_image(image_path):
 if __name__ == "__main__":
     for i in range(1, 6):  # 1から5までの連番
         print(f"\nimage number: {i}")
-        image_path = f'Camera-test\Evaluation\image{i}.jpg'  # 画像のパスを正確に指定
+        image_path = f'Camera-test\Evaluation-desert\image{i}.jpg'  # 画像のパスを正確に指定
         histogram = analyze_image(image_path)
 
         if histogram is not None:

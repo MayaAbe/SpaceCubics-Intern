@@ -19,9 +19,16 @@ def sobel_variance(image_path):
     return sobel_var
 
 if __name__ == "__main__":
-    for i in range(1, 6):  # 1から5までの連番
-        image_path = f'Camera-test\Evaluation\image{i}.jpg'  # 画像のパスを生成
-        result = sobel_variance(image_path)
+    import time
 
-        if result is not None:
-            print(f"Sobel Variance for the image at {image_path}: {result}")
+    start_time = time.time()
+    for x in range(100):
+        for i in range(1, 5):  # 1から5までの連番
+            image_path = f'Camera-test\Evaluation-desert\iss{i}.jpg'  # 画像のパスを生成
+            result = sobel_variance(image_path)
+
+            if result is not None:
+                print(f"Sobel Variance for the image at {image_path}: {result}")
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print(f"実行時間: {elapsed_time} 秒")

@@ -39,7 +39,7 @@ if __name__ == "__main__":
         full_path = os.path.join(script_directory, file)
         if file.lower().endswith('.jpg') or file.lower().endswith('.jpeg') or file.lower().endswith('.png'):
             print(f"Processing {file}...")
-            processed_img, white_ratio = binarize_image(full_path, threshold=30)  # 画像を二値化
+            processed_img, white_ratio = binarize_image(full_path, threshold=10)  # 画像を二値化
 
             # 新しいファイル名を生成
             base_name, ext = os.path.splitext(file)
