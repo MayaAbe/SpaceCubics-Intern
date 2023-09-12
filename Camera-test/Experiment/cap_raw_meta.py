@@ -38,7 +38,7 @@ def save_image_and_metadata(directory, index, image, metadata):
 
 picam2 = Picamera2()
 time.sleep(1)
-metadata = param.metadata 
+metadata = param.metadata
 
 exposure_normal = metadata["ExposureTime"]
 gain = metadata["AnalogueGain"] * metadata["DigitalGain"]
