@@ -1,3 +1,16 @@
+def update_metadata(metadata, key, new_value):
+    if key in metadata:
+        metadata[key] = new_value
+        print(f"Updated {key} to {new_value}")
+    else:
+        print(f"Key {key} not found in metadata")
+
+def check_metadata(metadata):
+    print("-------------------------------")
+    for key, value in metadata.items():
+        print(f'{key}: {value}')
+    print("-------------------------------")
+
 metadata={ 
 'ScalerCrop': (160, 0, 960, 720), 
 'SensorBlackLevels': (2048, 2048, 2048, 2048), 
