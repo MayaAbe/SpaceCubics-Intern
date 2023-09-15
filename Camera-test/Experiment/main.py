@@ -2,7 +2,7 @@ import parameters
 import cap_dng_jpg as dngjpg
 import exifrw
 
-FILENAME = "A"
+FILENAME = "./image1"
 
 key1 = input("Do you watch params? (y/n):")
 if key1 == "y":

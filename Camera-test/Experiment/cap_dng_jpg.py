@@ -8,7 +8,7 @@ def capture_dng(output_filename="cap_dng_jpg(.dng)", metadata=param.metadata):
     picam2 = Picamera2()
 
     exposure = metadata["ExposureTime"]  # Read from parameters module
-    gain = metadata["AnalogueGain"]*["DigitalGain"]  # Read from parameters module
+    gain = metadata["AnalogueGain"] * metadata["DigitalGain"]  # Read from parameters module
 
     controls = {"ExposureTime": exposure, "AnalogueGain": gain}
     capture_config = picam2.create_still_configuration(raw={}, display=None, controls=controls)
@@ -20,4 +20,4 @@ def capture_dng(output_filename="cap_dng_jpg(.dng)", metadata=param.metadata):
     r.save_dng(output_filename + ".dng")
 
 if __name__ == "__main__":
-    capture_dng()
+    capture_dng("image_test")
