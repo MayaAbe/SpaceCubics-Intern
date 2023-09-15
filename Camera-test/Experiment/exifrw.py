@@ -1,6 +1,6 @@
 import pyexiv2
 
-IMG_PATH = "Camera-test\Experiment\cap_dng_jpg0.jpg"
+IMG_PATH = "Camera-test\Experiment\cap_dng_jpg0.dng"
 
 def exif_read(path = ""):
     with pyexiv2.Image(path) as img:

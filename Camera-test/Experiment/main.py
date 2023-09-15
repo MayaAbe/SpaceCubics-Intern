@@ -1,8 +1,9 @@
 import parameters
 import cap_dng_jpg as dngjpg
 import exifrw
+import filenumber
 
-FILENAME = "./image1"
+FILENAME = filenumber.get_name()
 
 key1 = input("Do you watch params? (y/n):")
 if key1 == "y":
