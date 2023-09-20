@@ -1,5 +1,5 @@
 import parameters
-import cap_dng_jpg as dngjpg
+import cap_dng as dngjpg
 import exifrw
 import filenumber
 
@@ -26,8 +26,6 @@ while True:
     else:
         print("type again")
         pass
-
-
 
 key4 = input("enter pass to check metadata for photo:")
 print("EXIF data is ...")
