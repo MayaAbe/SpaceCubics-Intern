@@ -48,26 +48,33 @@ def adjust_metadata(metadata: dict, key, new_value):
         print(f"Key {key} not found in metadata")
 
 
-def update_metadata(metadata: dict, key, new_value, file_path="parameters.py"):
-    if key in metadata:
-        metadata[key] = new_value
-        print(f"Updated {key} to {new_value}")
-        
-        # ファイルに保存
-        with open(file_path, 'r', encoding="utf-8") as f:
-            lines = f.readlines()
-        
-        with open(file_path, 'w') as f:
-            for line in lines:
-                if line.strip().startswith(f"{key}:"):
-                    f.write(f"'{key}': {new_value},\n")
-                else:
-                    f.write(line)
-        
-        print(f"Saved {key} to {new_value} in {file_path}")
-        
+def update_metadata(key, new_value, file_path="parameters.py"):
+    # ファイルから現在の内容を読み込む
+    with open(file_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    # 更新後の行を保存するリスト
+    new_lines = []
+
+    # キーが見つかったかどうかのフラグ
+    key_found = False
+
+    # 各行を調べて、キーが見つかったらその行を新しい値で更新
+    for line in lines:
+        if line.strip().startswith(f"{key} ="):
+            new_lines.append(f"{key} = {new_value}\n")
+            key_found = True
+        else:
+            new_lines.append(line)
+
+    if key_found:
+        # 更新後の内容をファイルに書き込む
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.writelines(new_lines)
+
+        print(f"Updated and saved {key} to {new_value} in {file_path}")
     else:
-        print(f"Key {key} not found in metadata")
+        print(f"Key {key} not found in {file_path}")
 
 
 def describe_metadata(metadata):
