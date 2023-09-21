@@ -58,3 +58,7 @@ def capture_dng_jpeg(output_filename_dng="capture.dng", output_filename_jpeg="ca
     r.save(output_filename_jpeg)
     
     r.save_dng(output_filename_dng)
+
+
+if __name__ == "__main__":
+    capture_dng_jpeg()
