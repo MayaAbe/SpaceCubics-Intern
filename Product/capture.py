@@ -24,7 +24,6 @@ def capture_dng_jpeg(output_filename_dng="capture.dng", output_filename_jpeg="ca
 
     picam2.stop()
 
-
 def capture_dng(output_filename="cap_dng.dng", metadata=param.metadata):
     picam2 = Picamera2()
 
@@ -65,4 +64,5 @@ def capture_jpeg(output_filename="cap_jpg.jpg", metadata=param.metadata):
 
 
 if __name__ == "__main__":
+    capture_dng()
     capture_dng_jpeg()
