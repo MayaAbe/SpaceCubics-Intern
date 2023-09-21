@@ -40,7 +40,7 @@ def update_metadata(json_path, key, new_value):
         json.dump(metadata, f, indent=4)
 
 
-def describe_metadata(metadata):
+def describe_metadata(metadata: dict):
     description = {}
     for key, value in metadata.items():
         description[key] = {'value': value, 'type': type(value).__name__}
