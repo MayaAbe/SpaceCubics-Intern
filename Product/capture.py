@@ -55,7 +55,7 @@ def capture_dng_jpeg(output_filename_dng="capture.dng", output_filename_jpeg="ca
     time.sleep(2)
 
     r = picam2.switch_mode_capture_request_and_stop(capture_config)
-    r.save(output_filename_jpeg)
+    r.save("main", output_filename_jpeg)
     
     r.save_dng(output_filename_dng)
 
