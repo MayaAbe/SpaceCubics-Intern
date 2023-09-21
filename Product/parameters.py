@@ -69,7 +69,7 @@ def load_metadata_from_json_with_tuple(json_path):
         return None
 
 
-metadata = load_metadata_from_json_with_tuple('Product\metadata.json')
+metadata = load_metadata_from_json_with_tuple('./metadata.json')
 
 if __name__ == "__main__":
     print(describe_metadata(metadata))
