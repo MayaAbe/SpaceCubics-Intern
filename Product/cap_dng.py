@@ -5,7 +5,6 @@ import time
 from picamera2 import Picamera2
 
 
-# param.metadata を辞書型に取得したjsonファイルにする
 def capture_dng(output_filename="cap_dng_jpg(.dng)", metadata=param.metadata):
     picam2 = Picamera2()
 
