@@ -19,6 +19,7 @@ def capture_dng_jpeg(output_filename_dng="capture.dng", output_filename_jpeg="ca
     time.sleep(2)
 
     r = picam2.switch_mode_capture_request_and_stop(capture_config)
+    r.save("main", output_filename_jpeg)
     r.save_dng(output_filename_dng)
 
     picam2.stop()
@@ -33,7 +34,6 @@ def capture_dng(output_filename="cap_dng.dng", metadata=param.metadata):
     controls = {"ExposureTime": exposure, "AnalogueGain": gain}
     capture_config = picam2.create_still_configuration(raw={}, display=None, controls=controls)
 
-    picam2.configure(capture_config)  # いらないかも
     picam2.start()
     time.sleep(2)
 
