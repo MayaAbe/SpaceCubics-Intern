@@ -1,6 +1,32 @@
 import json
 
 
+def list_to_tuple_recursive(data):
+    if isinstance(data, list):
+        return tuple(list_to_tuple_recursive(item) for item in data)
+    elif isinstance(data, dict):
+        return {key: list_to_tuple_recursive(value) for key, value in data.items()}
+    else:
+        return data
+
+
+def load_metadata_from_json_with_tuple(json_path):
+    try:
+        with open(json_path, 'r') as f:
+            metadata = json.load(f)
+        return list_to_tuple_recursive(metadata)
+    except FileNotFoundError:
+        print(f"File {json_path} not found.")
+        return None
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON from {json_path}.")
+        return None
+
+
+def refresh_metadata(metadata: dict):
+    metadata = load_metadata_from_json_with_tuple('./metadata.json')
+
+
 # 関数が呼び出されるたびに.jsonファイルを読み込む
 def check_metadata(metadata: dict):
     print("-------------------------------")
@@ -45,28 +71,6 @@ def describe_metadata(metadata: dict):
     for key, value in metadata.items():
         description[key] = {'value': value, 'type': type(value).__name__}
         print(f"{key}:\n  Value: {value}\n  Type: {type(value).__name__}\n")
-
-
-def list_to_tuple_recursive(data):
-    if isinstance(data, list):
-        return tuple(list_to_tuple_recursive(item) for item in data)
-    elif isinstance(data, dict):
-        return {key: list_to_tuple_recursive(value) for key, value in data.items()}
-    else:
-        return data
-
-
-def load_metadata_from_json_with_tuple(json_path):
-    try:
-        with open(json_path, 'r') as f:
-            metadata = json.load(f)
-        return list_to_tuple_recursive(metadata)
-    except FileNotFoundError:
-        print(f"File {json_path} not found.")
-        return None
-    except json.JSONDecodeError:
-        print(f"Error decoding JSON from {json_path}.")
-        return None
 
 
 metadata = load_metadata_from_json_with_tuple('./metadata.json')

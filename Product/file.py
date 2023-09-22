@@ -1,6 +1,8 @@
 import os
 import glob
 
+
+# 次に使用する画像の名前を生成する関数
 def get_name():
     jpg_files = glob.glob("ImageJPG/*.jpg")
     dng_files = glob.glob("ImageDNG/*.dng")
@@ -15,6 +17,8 @@ def get_name():
 
     return f"image{max(all_numbers) + 1}"
 
+
+# 片方のディレクトリにしか存在しないファイルを削除する関数
 def format_number():
     jpg_files = glob.glob("ImageJPG/*.jpg")
     dng_files = glob.glob("ImageDNG/*.dng")
@@ -31,6 +35,8 @@ def format_number():
     for num in only_dng:
         os.remove(f"ImageDNG/image{num}.dng")
 
+
+# ImageJPG と ImageDNG の画像ファイルのリストを表示する関数
 def list_file():
     jpg_files = glob.glob("ImageJPG/*.jpg")
     dng_files = glob.glob("ImageDNG/*.dng")
@@ -43,6 +49,8 @@ def list_file():
     for f in dng_files:
         print(os.path.basename(f))
 
+
+# 指定された番号の .jpg と .dng 画像ファイルを削除する関数
 def delete_file(number):
     jpg_file = f"ImageJPG/image{number}.jpg"
     dng_file = f"ImageDNG/image{number}.dng"
