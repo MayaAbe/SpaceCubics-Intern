@@ -34,11 +34,11 @@ def binalize_xmp(directory_path='./ImageJPG'):
     if not file_list:
         print("there is no image")
         return
-    
+
     # ファイルが存在する場合、それぞれに対して処理を行う
     for filename in file_list:
         file_path = os.path.join(directory_path, filename)
-        
+
         # exifrw.pyのxmp_readを使って，全ての画像のxmpを読み込む
         xmp_data = exifrw.xmp_get_dict(file_path)
         # xmpの中に"BinalizedWhiteRate"タグがない画像を見つける
