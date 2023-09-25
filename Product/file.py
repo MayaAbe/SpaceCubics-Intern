@@ -64,3 +64,7 @@ def delete_file(number):
         print(f"Error: {jpg_file} does not exist.")
     else:
         print(f"Error: Both {jpg_file} and {dng_file} do not exist.")
+
+if __name__ == "__main__":
+    list_file()
+    print(get_name())

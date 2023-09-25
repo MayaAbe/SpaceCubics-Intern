@@ -1,9 +1,9 @@
-
 #!/usr/bin/python3
 
 import time
 from picamera2 import Picamera2
 import parameters as param  # Assuming parameters.py contains common parameters
+import file
 
 
 def capture_dng_jpeg(output_filename="image0"):
@@ -64,4 +64,4 @@ def capture_jpeg(output_filename="cap_jpg.jpg", metadata=param.metadata):
 
 
 if __name__ == "__main__":
-    capture_dng_jpeg()
+    capture_dng_jpeg(file.get_name())
