@@ -6,7 +6,7 @@ import parameters as param  # Assuming parameters.py contains common parameters
 import file
 
 
-def capture_dng_jpeg(output_filename="image0"):
+def capture_dng_jpeg(output_filename="image0", folderin=True):
     picam2 = Picamera2()
 
     exposure = param.metadata["ExposureTime"]  # Read from parameters module
@@ -19,8 +19,14 @@ def capture_dng_jpeg(output_filename="image0"):
     time.sleep(2)
 
     r = picam2.switch_mode_capture_request_and_stop(capture_config)
-    r.save("main", output_filename+".jpg")
-    r.save_dng(output_filename+".dng")
+
+    if folderin == False:
+        r.save("main", output_filename+".jpg")
+        r.save_dng(output_filename+".dng")
+
+    if folderin == True:
+        r.save("main", "ImageJPG/"+output_filename+".jpg")
+        r.save_dng("ImageDNG/"+output_filename+".dng")
 
     picam2.stop()
 
