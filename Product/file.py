@@ -41,14 +41,14 @@ def list_file():
     jpg_files = glob.glob("ImageJPG/*.jpg")
     dng_files = glob.glob("ImageDNG/*.dng")
 
-    print("ImageJPG:")
+    print("\nImageJPG:")
     for f in jpg_files:
         print(os.path.basename(f))
 
     print("ImageDNG:")
     for f in dng_files:
         print(os.path.basename(f))
-
+    print("\n")
 
 # 指定された番号の .jpg と .dng 画像ファイルを削除する関数
 def delete_file(number):
