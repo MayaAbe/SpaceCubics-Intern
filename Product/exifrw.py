@@ -79,9 +79,21 @@ def meta_save(image_path):
 
     return f"Metadata saved to {output_filename}"
 
+
+def meta_save_directory(directory_path="./ImageJPG"):
+    """Reads metadata from all .jpg files in the directory and saves it to .txt files."""
+    for root, dirs, files in os.walk(directory_path):
+        for file in files:
+            if file.lower().endswith('.jpg'):
+                file_path = os.path.join(root, file)
+                meta_save(file_path)
+    return f"Metadata saved for all .jpg files in {directory_path}"
+
+
+
 if __name__ == "__main__":
     # xmp_delete(IMG_PATH)
     # exif_read(IMG_PATH)
     # xmp_read(IMG_PATH)
     # xmp_write(IMG_PATH, "BinalizedWhiteRate", "100"); xmp_read(IMG_PATH)
-    meta_save(IMG_PATH)
+    meta_save_directory()
