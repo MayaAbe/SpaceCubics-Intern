@@ -1,6 +1,7 @@
 import pyexiv2
 import os
 import sys
+from io import StringIO
 
 IMG_PATH = "Product\ImageJPG\image1.jpg"
 
@@ -50,11 +51,37 @@ def xmp_delete(path=""):
         pass
 
 
-# The function is updated to save the output to the same directory as the input image.
+def capture_output(func, *args, **kwargs):
+    """Utility function to capture print output from a function."""
+    old_stdout = sys.stdout
+    sys.stdout = new_stdout = StringIO()
+    try:
+        func(*args, **kwargs)
+    finally:
+        sys.stdout = old_stdout
+    return new_stdout.getvalue()
+
+def meta_save(image_path):
+    """Reads metadata from the image and saves it to a .txt file."""
+    # Capturing the output from the exif_read and xmp_read functions
+    exif_output = capture_output(exif_read, image_path)
+    xmp_output = capture_output(xmp_read, image_path)
+
+    # Combining both outputs
+    full_output = exif_output + "\n" + xmp_output
+
+    # Generating the output file name
+    output_filename = os.path.splitext(image_path)[0] + ".txt"
+
+    # Writing the combined output to the .txt file
+    with open(output_filename, "w") as file:
+        file.write(full_output)
+
+    return f"Metadata saved to {output_filename}"
 
 if __name__ == "__main__":
     # xmp_delete(IMG_PATH)
     # exif_read(IMG_PATH)
     # xmp_read(IMG_PATH)
-    meta_read(IMG_PATH)
     # xmp_write(IMG_PATH, "BinalizedWhiteRate", "100"); xmp_read(IMG_PATH)
+    meta_save(IMG_PATH)
