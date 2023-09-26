@@ -60,7 +60,7 @@ def binalize_xmp(directory_path='./ImageJPG'):
 
 
 if __name__ == "__main__":
-    binalize_xmp("Product\ImageJPG")
+    binalize_xmp("./ImageJPG")
     """
     # スクリプトが存在するディレクトリのパスを取得
     script_directory = os.path.dirname(os.path.abspath(__file__))
