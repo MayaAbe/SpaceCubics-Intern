@@ -1,4 +1,6 @@
 import pyexiv2
+import os
+import sys
 
 IMG_PATH = "Product\ImageJPG\image1.jpg"
 
@@ -48,8 +50,11 @@ def xmp_delete(path=""):
         pass
 
 
+# The function is updated to save the output to the same directory as the input image.
+
 if __name__ == "__main__":
-    xmp_delete(IMG_PATH)
-    exif_read(IMG_PATH)
-    xmp_read(IMG_PATH)
+    # xmp_delete(IMG_PATH)
+    # exif_read(IMG_PATH)
+    # xmp_read(IMG_PATH)
+    meta_read(IMG_PATH)
     # xmp_write(IMG_PATH, "BinalizedWhiteRate", "100"); xmp_read(IMG_PATH)
