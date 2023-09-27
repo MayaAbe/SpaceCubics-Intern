@@ -15,48 +15,38 @@ def binarize_pixels(img, threshold=30):
             else:
                 pixels[x, y] = 255  # 白にする
                 white_pixels += 1  # 白いピクセルの数をカウント
-    return img, white_pixels
+    #画像のファイルサイズを取得
+    total_pixels = width * height  # 全ピクセル数を計算
+    white_ratio = (white_pixels / total_pixels) * 100  # 白いピクセルの割合を計算
+    return img, white_pixels, white_ratio
 
 
 # 白いピクセルの比率を計算する関数。
-def calculate_white_ratio(white_pixels, total_pixels):
-    return (white_pixels / total_pixels) * 100  # 白いピクセルの割合を計算
+def get_file_size(img):
+    file_size = os.path.getsize(img)
+    return file_size
 
 
 def save_image(img, path):
     img.save(path)
 
 
-def binalize_xmp(directory_path='./ImageJPG'):
-    # ディレクトリ内のファイルリストを取得
-    file_list = os.listdir(directory_path)
-
-    if not file_list:
-        print("there is no image")
-        return
-
-    # ファイルが存在する場合、それぞれに対して処理を行う
-    for filename in file_list:
-        file_path = os.path.join(directory_path, filename)
-
-        # exifrw.pyのxmp_readを使って，全ての画像のxmpを読み込む
-        xmp_data = exifrw.xmp_get_dict(file_path)
-        # xmpの中に"BinalizedWhiteRate"タグがない画像を見つける
-        if "BinalizedWhiteRate" not in xmp_data:
-            # その画像をbinalize_pixelsで二値化し，calculate_white_ratioで白いピクセルの割合を計算
-            with Image.open(file_path).convert("L") as img:
-                width, height = img.size  # 画像のサイズ
-                total_pixels = width * height  # 全ピクセル数を計算
-                _, white_pixels = binarize_pixels(img)
-                white_ratio = calculate_white_ratio(white_pixels, total_pixels)
-                # 白いピクセルの割合を"BinalizedWhiteRate"タグに書き込む
-                exifrw.xmp_write(file_path, "BinalizedWhiteRate", str(white_ratio))
-                # 現在処理中のファイル名を表示
-                print(f"Processing {filename}...")
-                # 追加したタグを表示
-                print(exifrw.xmp_get_dict(file_path))
-        else:
-            pass
+def binalize_xmp(file_path='./ImageJPG/image1.jpg'):
+    # exifrw.pyのxmp_readを使って，全ての画像のxmpを読み込む
+    xmp_data = exifrw.xmp_get_dict(file_path)
+    # xmpの中に"BinalizedWhiteRate"タグがない画像を見つける
+    if "BinalizedWhiteRate" not in xmp_data:
+    # その画像をbinalize_pixelsで二値化し，calculate_white_ratioで白いピクセルの割合を計算
+        _, _, white_ratio = binarize_pixels(img)
+        # 白いピクセルの割合を"BinalizedWhiteRate"タグに書き込む
+        exifrw.xmp_write(file_path, "BinalizedWhiteRate", str(white_ratio))
+        # 現在処理中のファイル名を表示
+        print(f"Processing {file_path}...")
+        # 追加したタグを表示
+        print(exifrw.xmp_get_dict(file_path))
+    else:
+        pass
+    return f"Processed {file_path} with BinalizedWhiteRate: {white_ratio}"
 
 
 if __name__ == "__main__":

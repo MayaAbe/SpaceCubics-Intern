@@ -1,7 +1,6 @@
-import os
 import cv2
 import numpy as np
-from exifrw import xmp_write
+import exifrw
 
 def sobel_variance(image_path):
     # 画像を読み込む
@@ -21,44 +20,24 @@ def sobel_variance(image_path):
     return sobel_var
 
 
-def sobel_xmp(directory_path='./ImageJPG'):
-    # List all files in the directory
-    file_list = os.listdir(directory_path)
-
-    # Filter out non-jpg files
-    jpg_files = [f for f in file_list if f.lower().endswith('.jpg')]
-
-    if not jpg_files:
-        print("No jpg images found in the directory.")
-        return
-
-    # Process each jpg file
-    for filename in jpg_files:
-        file_path = os.path.join(directory_path, filename)
-
-        # Read the image
-        image = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
-
-        # Check if image is loaded correctly
-        if image is None:
-            print(f"Error: Could not open or find the image at {file_path}")
-            continue
-
-        # Apply Sobel filter and calculate variance
-        sobelx = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
-        sobely = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
-        sobel_var = np.var(sobelx) + np.var(sobely)
-
+def sobel_xmp(file_path='./ImageJPG/image1.jpg'):
+    # exifrw.pyのxmp_readを使って，全ての画像のxmpを読み込む
+    xmp_data = exifrw.xmp_get_dict(file_path)
+    if "SobelFilterResult" not in xmp_data:
+        sovel_var = sobel_variance(file_path)
         # Write the Sobel variance to the XMP with the tag "SobelFilterResult"
-        xmp_write(file_path, "SobelFilterResult", str(sobel_var))
-
-        # Feedback
-        print(f"Processed {filename} with Sobel Variance: {sobel_var}")
-
+        exifrw.xmp_write(file_path, "SobelFilterResult", str(sovel_var))
+        # 現在処理中のファイル名を表示
+        print(f"Processing {file_path}...")
+        # 追加したタグを表示
+        print(exifrw.xmp_get_dict(file_path))
+    else:
+        pass
+    return f"Processed {file_path} with Sobel Variance: {sovel_var}"
 
 
 if __name__ == "__main__":
-    sobel_xmp("./ImageJPG")
+    sobel_xmp("./ImageJPG/image1.jpg")
 
 
 """
