@@ -4,20 +4,21 @@ import exifrw
 
 
 # 画像内の各ピクセルを二値化（白または黒）にする関数。白いピクセルの数も計算します。
-def binarize_pixels(img, threshold=30):
-    pixels = img.load()  # ピクセルデータをロード
-    white_pixels = 0
-    width, height = img.size  # 画像のサイズ
-    for x in range(width):
-        for y in range(height):
-            if pixels[x, y] <= threshold:
-                pixels[x, y] = 0  # 黒にする
-            else:
-                pixels[x, y] = 255  # 白にする
-                white_pixels += 1  # 白いピクセルの数をカウント
-    #画像のファイルサイズを取得
-    total_pixels = width * height  # 全ピクセル数を計算
-    white_ratio = (white_pixels / total_pixels) * 100  # 白いピクセルの割合を計算
+def binarize_pixels(file_path, threshold=30):
+    with Image.open(file_path).convert("L") as img:
+        pixels = img.load()  # ピクセルデータをロード
+        white_pixels = 0
+        width, height = img.size  # 画像のサイズ
+        for x in range(width):
+            for y in range(height):
+                if pixels[x, y] <= threshold:
+                    pixels[x, y] = 0  # 黒にする
+                else:
+                    pixels[x, y] = 255  # 白にする
+                    white_pixels += 1  # 白いピクセルの数をカウント
+        # 画像のファイルサイズを取得
+        total_pixels = width * height  # 全ピクセル数を計算
+        white_ratio = (white_pixels / total_pixels) * 100  # 白いピクセルの割合を計算
     return img, white_pixels, white_ratio
 
 
@@ -37,7 +38,7 @@ def binalize_xmp(file_path='./ImageJPG/image1.jpg'):
     # xmpの中に"BinalizedWhiteRate"タグがない画像を見つける
     if "BinalizedWhiteRate" not in xmp_data:
     # その画像をbinalize_pixelsで二値化し，calculate_white_ratioで白いピクセルの割合を計算
-        _, _, white_ratio = binarize_pixels(img)
+        _, _, white_ratio = binarize_pixels(file_path)
         # 白いピクセルの割合を"BinalizedWhiteRate"タグに書き込む
         exifrw.xmp_write(file_path, "BinalizedWhiteRate", str(white_ratio))
         # 現在処理中のファイル名を表示
@@ -50,7 +51,7 @@ def binalize_xmp(file_path='./ImageJPG/image1.jpg'):
 
 
 if __name__ == "__main__":
-    binalize_xmp("./ImageJPG")
+    binalize_xmp("Product\ImageJPG\image1.jpg")
     """
     # スクリプトが存在するディレクトリのパスを取得
     script_directory = os.path.dirname(os.path.abspath(__file__))
